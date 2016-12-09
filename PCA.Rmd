@@ -1,0 +1,52 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+
+
+
+```{r}
+states=row.names(USArrests)
+states
+names(USArrests)
+```
+```{r}
+apply(USArrests,2,mean)
+apply(USArrests,2,var)
+```
+```{r}
+pr.out<-prcomp(USArrests,scale. = T)
+names(pr.out)
+pr.out
+```
+
+```{r}
+pr.out$sdev
+pr.out$center
+pr.out$scale
+```
+
+```{r}
+pr.out$rotation
+```
+```{r}
+#scale=0 in order to visualize clearly
+biplot(pr.out,scale=0)
+pr.out$rotation=-pr.out$rotation
+pr.out$x=-pr.out$x
+biplot(pr.out,scale=0)
+
+```
+```{r}
+#to see that the fist principle component explain 62% of the variance, and so on
+pr.out$sdev
+pr.var=pr.out$sdev^2
+pr.var
+pve=pr.var/sum(pr.var)
+pve
+```
+```{r}
+plot(pve,xlab = "Principle Component",ylab = "Proportion of Variance Explained",ylim = c(0,1),type = "b")
+plot(cumsum(pve),xlab = "Principle Component",ylab = "Proportion of Variance Explained",ylim = c(0,1),type = "b")
+```
+
